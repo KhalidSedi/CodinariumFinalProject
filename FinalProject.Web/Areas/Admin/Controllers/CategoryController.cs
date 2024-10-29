@@ -22,7 +22,6 @@ namespace FinalProject.Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
             return View();
-
         }
 
         [HttpPost]
@@ -51,7 +50,6 @@ namespace FinalProject.Web.Areas.Admin.Controllers
             if (result.IsSuccess) return RedirectToAction("Index");
 
             return View(category);
-
         }
 
         [HttpPost]
