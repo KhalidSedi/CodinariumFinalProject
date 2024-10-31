@@ -1,7 +1,7 @@
 ﻿using Core.DataAccess.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Context;
-using Entities.TableModels;
+using Entities.Concrete.TableModels;
 
 namespace DataAccess.Concrete
 {

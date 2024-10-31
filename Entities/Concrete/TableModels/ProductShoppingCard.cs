@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.TableModels
+namespace Entities.Concrete.TableModels
 {
     public class ProductShoppingCard : BaseEntity
     {

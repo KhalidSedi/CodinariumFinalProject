@@ -1,6 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Results.Abstract;
-using Entities.TableModels;
+using Entities.Concrete.TableModels;
 using System.Linq.Expressions;
 
 namespace Business.Concrete

@@ -2,26 +2,35 @@
 using Business.BaseMessages;
 using Core.Results.Abstract;
 using Core.Results.Concrete;
-using DataAccess.Concrete;
-using Entities.TableModels;
-using System.Linq.Expressions;
+using DataAccess.Abstract;
+using Entities.Concrete.Dtos;
+using Entities.Concrete.TableModels;
 
 namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        CategoryDal categoryDal = new();
-        public IResult Add(Category entity)
+        private readonly ICategoryDal _categoryDal;
+        public CategoryManager(ICategoryDal categoryDal)
         {
-            categoryDal.Add(entity);
+            _categoryDal = categoryDal;
+        }
+
+        public IResult Add(CategoryCreateDto dto)
+        {
+            var model = CategoryCreateDto.ToCategory(dto);
+
+            _categoryDal.Add(model);
 
             return new SuccessResult(UIMessages.ADDED_MESSAGE);
         }
-        public IResult Update(Category entity)
+        public IResult Update(CategoryUpdateDto dto)
         {
-           entity.LastUpdatedDate = DateTime.Now;
+            var model = CategoryUpdateDto.ToCategory(dto);
 
-            categoryDal.Update(entity);
+            model.LastUpdatedDate = DateTime.Now;
+
+            _categoryDal.Update(model);
 
             return new SuccessResult(UIMessages.UPDATED_MESSAGE);
         }
@@ -31,19 +40,19 @@ namespace Business.Concrete
 
             data.Deleted = id;
 
-            categoryDal.Update(data);
+            _categoryDal.Update(data);
 
             return new SuccessResult(UIMessages.DELETED_MESSAGE);
         }
 
-        public IDataResult<List<Category>> GetAll(Expression<Func<Category, bool>>? filter = null)
+        public IDataResult<List<Category>> GetAll()
         {
-            return new SuccesDataResult<List<Category>>(categoryDal.GetAll(x => x.Deleted == 0));
+            return new SuccesDataResult<List<Category>>(_categoryDal.GetAll(x => x.Deleted == 0));
         }
 
         public IDataResult<Category> GetById(int id)
         {
-            return new SuccesDataResult<Category>(categoryDal.GetById(id));
+            return new SuccesDataResult<Category>(_categoryDal.GetById(id));
         }
     }
 }

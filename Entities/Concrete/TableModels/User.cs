@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.TableModels
+namespace Entities.Concrete.TableModels
 {
     public class User : BaseEntity, IEntity
     {
@@ -9,6 +9,6 @@ namespace Entities.TableModels
         public string Password { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-       
+
     }
 }

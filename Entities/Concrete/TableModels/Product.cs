@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.TableModels
+namespace Entities.Concrete.TableModels
 {
     public class Product : BaseEntity, IEntity
     {
@@ -8,6 +8,7 @@ namespace Entities.TableModels
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
+        public bool IsHomePage { get; set; }
         public string ImgUrl { get; set; }
         public int CategoryId { get; set; }
 

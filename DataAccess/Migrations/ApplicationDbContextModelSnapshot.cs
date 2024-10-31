@@ -22,7 +22,34 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.TableModels.Category", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.About", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 100L);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Deleted")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Abouts", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Concrete.TableModels.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +88,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.CheckOut", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.CheckOut", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +156,7 @@ namespace DataAccess.Migrations
                     b.ToTable("CheckOuts", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.Contact", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.Contact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,6 +174,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("datetime2");
@@ -171,7 +201,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Contacts", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.Product", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,6 +227,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsHomePage")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("datetime2");
@@ -226,7 +259,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.ProductShoppingCard", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.ProductShoppingCard", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -254,7 +287,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Product_ShoppingCard", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.ShoppingCard", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.ShoppingCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,7 +315,7 @@ namespace DataAccess.Migrations
                     b.ToTable("ShoppingCards", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.TableModels.User", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -321,10 +354,13 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("Name")
                         .HasDatabaseName("idx_User_Name");
@@ -347,9 +383,9 @@ namespace DataAccess.Migrations
                     b.ToTable("ProductShoppingCard");
                 });
 
-            modelBuilder.Entity("Entities.TableModels.Product", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.Product", b =>
                 {
-                    b.HasOne("Entities.TableModels.Category", "Category")
+                    b.HasOne("Entities.Concrete.TableModels.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -359,15 +395,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Entities.TableModels.ProductShoppingCard", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.ProductShoppingCard", b =>
                 {
-                    b.HasOne("Entities.TableModels.Product", "Product")
+                    b.HasOne("Entities.Concrete.TableModels.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.TableModels.ShoppingCard", "ShoppingCard")
+                    b.HasOne("Entities.Concrete.TableModels.ShoppingCard", "ShoppingCard")
                         .WithMany()
                         .HasForeignKey("ShoppingCardId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -380,20 +416,20 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("ProductShoppingCard", b =>
                 {
-                    b.HasOne("Entities.TableModels.Product", null)
+                    b.HasOne("Entities.Concrete.TableModels.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.TableModels.ShoppingCard", null)
+                    b.HasOne("Entities.Concrete.TableModels.ShoppingCard", null)
                         .WithMany()
                         .HasForeignKey("ShoppingCardsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.TableModels.Category", b =>
+            modelBuilder.Entity("Entities.Concrete.TableModels.Category", b =>
                 {
                     b.Navigation("Products");
                 });

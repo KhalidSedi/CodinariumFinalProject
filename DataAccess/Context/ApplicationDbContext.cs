@@ -1,4 +1,4 @@
-﻿using Entities.TableModels;
+﻿using Entities.Concrete.TableModels;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -16,6 +16,7 @@ namespace DataAccess.Context
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        public DbSet<About> Abouts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Contact> Contacts { get; set; }

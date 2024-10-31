@@ -1,5 +1,5 @@
 ﻿using Core.ConstValues;
-using Entities.TableModels;
+using Entities.Concrete.TableModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -28,7 +28,7 @@ namespace DataAccess.Configurations
 
             builder.Property(x => x.Phone)
                    .IsRequired()
-                   .HasMaxLength(15);
+                   .HasMaxLength(20);
 
             builder.Property(x => x.Address)
                    .IsRequired()
@@ -37,6 +37,8 @@ namespace DataAccess.Configurations
             builder.HasIndex(x => x.Name)
                    .HasDatabaseName("idx_User_Name");
 
+            builder.HasIndex(x => x.Email)
+                   .IsUnique();
         }
     }
 }

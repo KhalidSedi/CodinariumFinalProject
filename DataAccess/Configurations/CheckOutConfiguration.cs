@@ -1,5 +1,5 @@
 ﻿using Core.ConstValues;
-using Entities.TableModels;
+using Entities.Concrete.TableModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

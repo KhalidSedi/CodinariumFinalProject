@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.TableModels
+namespace Entities.Concrete.TableModels
 {
     public class Contact : BaseEntity, IEntity
     {
@@ -8,6 +8,7 @@ namespace Entities.TableModels
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
+        public bool IsRead { get; set; } = false;
 
     }
 }

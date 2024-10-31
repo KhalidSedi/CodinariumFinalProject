@@ -1,6 +1,6 @@
 ﻿using Core.ConstValues;
 using Core.Entities.Abstract;
-using Entities.TableModels;
+using Entities.Concrete.TableModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
