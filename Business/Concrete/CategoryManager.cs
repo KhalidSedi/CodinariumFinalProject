@@ -5,20 +5,39 @@ using Core.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete.Dtos;
 using Entities.Concrete.TableModels;
+using FluentValidation;
 
 namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
         private readonly ICategoryDal _categoryDal;
-        public CategoryManager(ICategoryDal categoryDal)
+
+        private readonly IValidator<Category> _validator;
+        public CategoryManager(ICategoryDal categoryDal, IValidator<Category> validator)
         {
             _categoryDal = categoryDal;
+
+            _validator = validator;
         }
 
         public IResult Add(CategoryCreateDto dto)
         {
             var model = CategoryCreateDto.ToCategory(dto);
+
+            var validator = _validator.Validate(model);
+
+            string errorMessage = " ";
+
+            foreach (var item in validator.Errors)
+            {
+                errorMessage = item.ErrorMessage;
+            }
+
+            if (!validator.IsValid)
+            {
+                return new ErrorResult(errorMessage);
+            }
 
             _categoryDal.Add(model);
 

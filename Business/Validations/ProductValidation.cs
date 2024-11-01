@@ -24,6 +24,10 @@ namespace Business.Validations
                    .NotEmpty()
                    .WithMessage(UIMessages.GetRequiredMessage("Açıqlama"));
 
+            RuleFor(x => x.Stock)
+                   .NotEmpty()
+                   .WithMessage(UIMessages.GetRequiredMessage("Say"));
+
             RuleFor(x => x.Price)
                   .NotEmpty()
                   .WithMessage(UIMessages.GetRequiredMessage("Qiymət"));

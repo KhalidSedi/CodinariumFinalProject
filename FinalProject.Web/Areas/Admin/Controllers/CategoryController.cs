@@ -32,7 +32,12 @@ namespace FinalProject.Web.Areas.Admin.Controllers
         {
             var result = _categoryService.Add(dto);
 
-            if (result.IsSuccess) return RedirectToAction("Index");
+            if (!result.IsSuccess)
+            {
+                ModelState.AddModelError("", result.Message);
+
+                return View();
+            }
 
             return View(dto);
         }

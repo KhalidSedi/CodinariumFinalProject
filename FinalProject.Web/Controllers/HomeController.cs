@@ -1,32 +1,30 @@
-using FinalProject.Web.Models;
+using Business.Abstract;
+using FinalProject.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace FinalProject.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICategoryService _categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _productService;
+        public HomeController(ICategoryService categoryService, IProductService productService)
         {
-            _logger = logger;
-        }
+            _categoryService = categoryService;
 
+            _productService = productService;
+        }
         public IActionResult Index()
         {
-            return View();
-        }
+            var categoryData = _categoryService.GetAll().Data;
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            HomeViewModel viewModel = new()
+            {
+                Categories = categoryData,
+            };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(viewModel);
         }
     }
 }
